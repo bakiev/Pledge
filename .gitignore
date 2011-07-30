@@ -1,0 +1,5 @@
+*.pyc
+db.sqlite
+pledge/.gitignore
+pledge/pledge_emails/*
+*~
