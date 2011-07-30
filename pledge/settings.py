@@ -75,8 +75,15 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+     'django.contrib.admin',
+    
+    # Third parties libraries
+    'registration',
+    
+    # Our libraries
+    'accounts',
+    'projects',
 )
-
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
