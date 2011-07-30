@@ -20,9 +20,9 @@ DATABASES = {
     }
 }
 
-TIME_ZONE = 'America/Chicago'
+TIME_ZONE = 'Asia/Yekaterinburg'
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru'
 
 SITE_ID = 1
 
@@ -66,6 +66,7 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'pledge.urls'
 
 TEMPLATE_DIRS = (
+    os.path.join(SITE_ROOT, 'templates'),
 )
 
 INSTALLED_APPS = (
