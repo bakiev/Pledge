@@ -4,7 +4,6 @@ from django.views.generic import CreateView, DeleteView, ListView
 from django.core.urlresolvers import reverse
 
 from projects.models import Project, Manager
-from projects.forms import ProjectForm
 from accounts.models import Developer
 
 class ProjectListView(ListView):
@@ -17,19 +16,22 @@ class ProjectCreateView(CreateView):
     def get_success_url(self):
         return reverse('project_list')
 
-    def get_form_class(self):
-        # form_class = super(ProjectCreateView, self).get_form_class()
-        return ProjectForm
-
     def get_initial(self):
+        '''Set manager
+        '''
         initial = super(ProjectCreateView, self).get_initial()
-        initial[u'manager'] = Manager.objects.get(user=self.request.user)
+        try:
+            initial['manager'] = Manager.objects.get(user=self.request.user.pk)
+        except Manager.DoesNotExist:
+            pass
         return initial
 
-    def get_form_kwargs(self):
-        kwargs = super(ProjectCreateView, self).get_form_kwargs()
-        import pdb; pdb.set_trace()
-        return kwargs
+    def get_form(self, *args, **kwargs):
+        '''Hide manager input field
+        '''
+        form = super(ProjectCreateView, self).get_form(*args, **kwargs)
+        form.fields['manager'].widget = form.fields['manager'].hidden_widget()
+        return form
 
 
 class DeveloperListView(ListView):
@@ -38,7 +40,26 @@ class DeveloperListView(ListView):
 
 class DeveloperAddView(CreateView):
     model = Developer
-    success_url = '/'
+
+    def get_success_url(self):
+        return reverse('/')
+
+    def get_initial(self):
+        '''Set manager
+        '''
+        initial = super(DeveloperAddView, self).get_initial()
+        try:
+            initial['manager'] = Manager.objects.get(user=self.request.user.pk)
+        except Manager.DoesNotExist:
+            pass
+        return initial
+
+    def get_form(self, *args, **kwargs):
+        '''Hide manager input field
+        '''
+        form = super(DeveloperAddView, self).get_form(*args, **kwargs)
+        form.fields['manager'].widget = form.fields['manager'].hidden_widget()
+        return form
 
 
 class DeveloperDeleteView(DeleteView):

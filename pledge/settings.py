@@ -76,7 +76,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-     'django.contrib.admin',
+    'django.contrib.admin',
     
     # Third parties libraries
     'registration',
@@ -102,3 +102,10 @@ LOGGING = {
         },
     }
 }
+
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = SITE_ROOT + '/pledge_emails/'
+
+ACCOUNT_ACTIVATION_DAYS = 8
+
+DEFAULT_FORM_EMAIL = 'registe@register.ru'

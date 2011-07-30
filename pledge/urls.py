@@ -4,6 +4,11 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
+    url(r'^registration/register/$', 'registration.views.register', {
+            'backend': 'accounts.backends.PledgeRegistration',
+        }, 'register'),
+    url(r'^registration/', include('registration.backends.default.urls')),
+    url(r'^accounts/', include('accounts.urls')),
     url(r'^project/', include('projects.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )
