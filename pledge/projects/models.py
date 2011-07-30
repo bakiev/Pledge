@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 
-from accounts import Manager, Developer
+from accounts.models import Manager, Developer
 
 # Create your models here.
 class Project(models.Model):
@@ -23,7 +23,7 @@ TASK_STATUS_CHOICES = (
 )
 class Task(models.Model):
     project = models.ForeignKey(Project)
-    developers = models.ManyToManeField(Developer, relatated_name='projects')
+    developers = models.ManyToManyField(Developer, related_name='projects')
     title = models.CharField(max_length=255)
     description = models.TextField()
     task_code = models.CharField(max_length=6, unique=True)
@@ -35,7 +35,7 @@ class Task(models.Model):
         return self.title
 
 class Commit(models.Model):
-    task = models.ForeignKey(Task0
+    task = models.ForeignKey(Task)
     text = models.CharField(max_length=255)
     created_date = models.DateTimeField(auto_now_add=True)
     
@@ -44,7 +44,7 @@ class Commit(models.Model):
     
 
 class FileStorage(models.Model):
-    filename = models.FielField()
+    filename = models.FileField(upload_to='store/')
     content_type = models.ForeignKey(ContentType)
     object_id = models.PositiveIntegerField()
     content_object = generic.GenericForeignKey('content_type', 'object_id')
