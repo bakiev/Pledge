@@ -7,14 +7,20 @@ from django.contrib.auth.models import User
 def generate_key():
     return hashlib.sha224(str(time.time())).hexdigest()[:6]
 
-# Create your models here.
 class Manager(models.Model):
     user = models.OneToOneField(User)
+
+    def __unicode__(self):
+        return self.user.get_full_name()
 
 
 class Developer(models.Model):
     user = models.OneToOneField(User)
     manager = models.ForeignKey(Manager)
+
+    def __unicode__(self):
+        return self.user.get_full_name()
+
 
 class Invite(models.Model):
     manager = models.ForeignKey(Manager)

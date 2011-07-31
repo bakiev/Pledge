@@ -11,7 +11,7 @@ class Project(models.Model):
     description = models.TextField()
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
-    developers = models.ManyToManyField(Developer, related_name='projects')
+n    developers = models.ManyToManyField(Developer, related_name='projects')
     
     def __unicode__(self):
         return self.title

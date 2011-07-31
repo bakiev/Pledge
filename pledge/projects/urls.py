@@ -5,9 +5,10 @@ from projects.views import (ProjectCreateView, DeveloperAddView,
 
 urlpatterns = patterns('',
     url(r'^$', ProjectListView.as_view(), name='project_list'),
+    url(r'^(?P<pk>\d+)/$', ProjectDetailView.as_view(), name='project_detail'),
     url(r'^create/$', ProjectCreateView.as_view(), name='project_create'),
-    url(r'^(?P<project_id>\d+)/developer/add/$', DeveloperAddView.as_view(),
+    url(r'^(?P<pk>\d+)/developer/add/$', DeveloperAddView.as_view(),
         name='developer_add'),
-    url(r'^(?P<project_id>\d+)/developer/(?P<pk>\d+)/delete/$', DeveloperDeleteView.as_view(),
+    url(r'^(?P<pk>\d+)/developer/(?P<developer_pk>\d+)/delete/$', DeveloperDeleteView.as_view(),
         name='developer_delete'),
 )
