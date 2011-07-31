@@ -1,11 +1,12 @@
 from django.contrib.auth.models import User
 from django.contrib.sites.models import RequestSite, Site
+from django.http import Http404
 
 from registration import signals
 from registration.backends.default import DefaultBackend
 from registration.models import RegistrationProfile
 
-from accounts.models import Manager, Developer
+from accounts.models import Manager, Developer, Invite
 
 class PledgeRegistration(DefaultBackend):
     def own_registration(self, request, user, email, password):
@@ -23,18 +24,30 @@ class PledgeRegistration(DefaultBackend):
         '''
         regisration of managers and developers(if we have got invite code)
         '''
-        user, email = kwargs['username'], kwargs['email']
+        user = kwargs['username'] 
         password = kwargs['password1']
         
-        new_user = self.own_registration(request, user, email, password)
+        is_developer = False
         try:
-            invite = kwargs['invite']
-            manager_id = kwargs['manager_id']
-            new_developer = Developer(user=new_user, manager_id=manager_id)
-            new_developer.save()
+            key = request.GET['invite']
+            invite =  Invite.objects.get(key=key)
+            if invite.is_used:
+                raise Http404()
+            invite.is_user = True
+            invite.save()
+            
+            email = invite.email
+            is_developer = True
         except KeyError:
+            email = kwargs['email']
+            
+        new_user = self.own_registration(request, user, email, password)
+        if is_developer:
+            new_developer = Developer(user=new_user, manager_id=invite.manager_id)
+            new_developer.save()
+        else:
             new_manager = Manager(user=new_user)
             new_manager.save()
-        
+            
         return new_user
 

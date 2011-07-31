@@ -10,15 +10,22 @@ def generate_key():
 # Create your models here.
 class Manager(models.Model):
     user = models.OneToOneField(User)
+    
+    def __unicode__(self):
+        return unicode(self.user)
 
 class Developer(models.Model):
     user = models.OneToOneField(User)
     manager = models.ForeignKey(Manager)
+    
+    def __unicode__(self):
+        return unicode(self.user)
 
 class Invite(models.Model):
     manager = models.ForeignKey(Manager)
     key = models.CharField(max_length=6, default=generate_key)
     email = models.EmailField(unique=True)
+    is_used = models.BooleanField(default = False)
     
 from accounts import signals
     
