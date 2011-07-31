@@ -1,7 +1,17 @@
 {% extends "base.html" %}
 
+<<<<<<< HEAD
+{% block content %}
+    <h1>Are you shure?</h1>
+    <form method="post">
+       {% csrf_token %}
+       <a href="..">No</a>
+       <input type="submit" value="Yes"/>
+    </form>
+=======
 {% block title %}Удаление разработчика{% endblock %}
 
 {% block content %}
 Вот как то так
+>>>>>>> e6ebbe0d290a182e281569f696f60cc29edeee1a
 {% endblock %}
