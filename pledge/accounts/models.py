@@ -14,6 +14,7 @@ class Manager(models.Model):
     def __unicode__(self):
         return unicode(self.user)
 
+
 class Developer(models.Model):
     user = models.OneToOneField(User)
     manager = models.ForeignKey(Manager)

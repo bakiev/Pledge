@@ -13,8 +13,9 @@ class Project(models.Model):
     updated_date = models.DateTimeField(auto_now=True)
     
     def __unicode__(self):
-        return selt.title
+        return self.title
     
+
 TASK_STATUS_CHOICES = (
     (1, 'Set task'),
     (2, 'Done task'),
@@ -33,6 +34,7 @@ class Task(models.Model):
     
     def __unicode__(self):
         return self.title
+
 
 class Commit(models.Model):
     task = models.ForeignKey(Task)

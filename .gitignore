@@ -1,5 +1,6 @@
 *.pyc
 db.sqlite
+pldege/db.sqlite
 pledge/.gitignore
 pledge/pledge_emails/*
 *~
