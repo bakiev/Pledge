@@ -1,6 +1,3 @@
-=========
-Haralyzer
-=========
 
 .. image:: https://badge.fury.io/py/haralyzer.svg
     :target: http://badge.fury.io/py/haralyzer
